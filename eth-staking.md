@@ -1,6 +1,6 @@
 ## ETH Staking 
 
-![image-1](_img\eth-stake.png)
+![](_img/eth-stake.png)
 
 ### example:
 
@@ -8,7 +8,7 @@ let's say that Alice has 32 ETHs. With her 32 ETH, she wants to run a validator 
 
 ## Rocket Pool
 
-![image-2](_img\rocketPool.png)
+![](_img/rocketPool.png)
 
 ### example:
 
@@ -18,7 +18,7 @@ The way it works is that all three of these users will interact with the RocketP
 
 ## Rebase Token and non-Rebase Token
 
-![image-3](_img\rebaseToken.png)
+![](_img/rebaseToken.png)
 
 ### example:
 
