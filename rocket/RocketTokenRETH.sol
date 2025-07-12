@@ -89,7 +89,7 @@ contract RocketTokenRETH is RocketBase, ERC20, RocketTokenRETHInterface {
         emit EtherDeposited(msg.sender, msg.value, block.timestamp);
     }
 
-    // Mint rETH
+    // Mint rETH 
     // Only accepts calls from the RocketDepositPool contract
     function mint(uint256 _ethAmount, address _to) override external onlyLatestContract("rocketDepositPool", msg.sender) {
         // Get rETH amount
@@ -121,7 +121,7 @@ contract RocketTokenRETH is RocketBase, ERC20, RocketTokenRETHInterface {
         // Emit tokens burned event
         emit TokensBurned(msg.sender, _rethAmount, ethAmount, block.timestamp);
     }
-
+    // 从存款池提取 ETH
     // Withdraw ETH from the deposit pool for collateral if required
     function withdrawDepositCollateral(uint256 _ethRequired) private {
         // Check rETH contract balance

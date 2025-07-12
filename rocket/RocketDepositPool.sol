@@ -40,7 +40,7 @@ contract RocketDepositPool is RocketBase, RocketDepositPoolInterface, RocketVaul
         address minipoolAddress;
         uint256 etherAssigned;
     }
-
+// 合约升级安全  防止恶意合约
     // Modifiers
     modifier onlyThisLatestContract() {
         // Compiler can optimise out this keccak at compile time
@@ -87,27 +87,33 @@ contract RocketDepositPool is RocketBase, RocketDepositPoolInterface, RocketVaul
     function receiveVaultWithdrawalETH() override external payable onlyThisLatestContract onlyLatestContract("rocketVault", msg.sender) {}
 
     /// @notice Deposits ETH into Rocket Pool and mints the corresponding amount of rETH to the caller
+    // onlyThisLatestContract ：确保只有最新版本的合约可以调用
     function deposit() override external payable onlyThisLatestContract {
         // Check deposit settings
         RocketDAOProtocolSettingsDepositInterface rocketDAOProtocolSettingsDeposit = RocketDAOProtocolSettingsDepositInterface(getContractAddress("rocketDAOProtocolSettingsDeposit"));
-        require(rocketDAOProtocolSettingsDeposit.getDepositEnabled(), "Deposits into Rocket Pool are currently disabled");
+       //getDepositEnabled() ：检查存款功能是否启用（紧急停止机制
+       require(rocketDAOProtocolSettingsDeposit.getDepositEnabled(), "Deposits into Rocket Pool are currently disabled");
+       // getMinimumDeposit() ：验证存款金额是否达到最低要求
         require(msg.value >= rocketDAOProtocolSettingsDeposit.getMinimumDeposit(), "The deposited amount is less than the minimum deposit size");
         /*
             Check if deposit exceeds limit based on current deposit size and minipool queue capacity.
 
             The deposit pool can, at most, accept a deposit that, after assignments, matches ETH to every minipool in
             the queue and leaves the deposit pool with maximumDepositPoolSize ETH.
-
+           //容量限制检查（核心逻辑
             capacityNeeded = depositPoolBalance + msg.value
             maxCapacity = maximumDepositPoolSize + queueEffectiveCapacity
             assert(capacityNeeded <= maxCapacity)
         */
+        // 容量限制检查（核心逻辑）
         uint256 capacityNeeded = getBalance().add(msg.value);
         uint256 maxDepositPoolSize = rocketDAOProtocolSettingsDeposit.getMaximumDepositPoolSize();
+         // 只在超出静态限制时才查询队列
         if (capacityNeeded > maxDepositPoolSize) {
             // Doing a conditional require() instead of a single one optimises for the common
             // case where capacityNeeded fits in the deposit pool without looking at the queue
             if (rocketDAOProtocolSettingsDeposit.getAssignDepositsEnabled()) {
+                // 外部调用获取队列容量
                 RocketMinipoolQueueInterface rocketMinipoolQueue = RocketMinipoolQueueInterface(getContractAddress("rocketMinipoolQueue"));
                 require(capacityNeeded <= maxDepositPoolSize.add(rocketMinipoolQueue.getEffectiveCapacity()),
                     "The deposit pool size after depositing (and matching with minipools) exceeds the maximum size");
@@ -118,7 +124,7 @@ contract RocketDepositPool is RocketBase, RocketDepositPoolInterface, RocketVaul
         // Calculate deposit fee
         uint256 depositFee = msg.value.mul(rocketDAOProtocolSettingsDeposit.getDepositFee()).div(calcBase);
         uint256 depositNet = msg.value.sub(depositFee);
-        // Mint rETH to user account
+        // Mint rETH to user account    铸造reth
         rocketTokenRETH.mint(depositNet, msg.sender);
         // Emit deposit received event
         emit DepositReceived(msg.sender, msg.value, block.timestamp);

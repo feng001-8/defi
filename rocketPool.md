@@ -8,4 +8,9 @@ The way it works is that all three of these users will interact with the RocketP
 
 
 
-## mint
+## mint and burn
+
+![](_img/mint_burn.png)
+
+### example:
+

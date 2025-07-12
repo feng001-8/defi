@@ -8,6 +8,10 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 /// @title The primary persistent storage for Rocket Pool
 /// @author David Rugendyke
 
+
+RocketStorage 是 Rocket Pool 的"数据中枢"，让协议既能保持数据安全，又能灵活升级功能。
+
+
 contract RocketStorage is RocketStorageInterface {
 
     // Events
@@ -204,7 +208,7 @@ contract RocketStorage is RocketStorageInterface {
     function setBytes(bytes32 _key, bytes calldata _value) onlyLatestRocketNetworkContract override external {
         bytesStorage[_key] = _value;
     }
-
+// 注册到 RocketStorage 移除旧合约权限 
     /// @param _key The key for the record
     function setBool(bytes32 _key, bool _value) onlyLatestRocketNetworkContract override external {
         booleanStorage[_key] = _value;
