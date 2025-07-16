@@ -34,19 +34,22 @@ contract RocketTokenRETH is RocketBase, ERC20, RocketTokenRETHInterface {
         // Emit ether deposited event
         emit EtherDeposited(msg.sender, msg.value, block.timestamp);
     }
-
+    /// 计算给定数量的 rETH 能够兑换多少 ETH 代币
     // Calculate the amount of ETH backing an amount of rETH
     function getEthValue(uint256 _rethAmount) override public view returns (uint256) {
         // Get network balances
         RocketNetworkBalancesInterface rocketNetworkBalances = RocketNetworkBalancesInterface(getContractAddress("rocketNetworkBalances"));
+        /// 获取总 ETH 数量
         uint256 totalEthBalance = rocketNetworkBalances.getTotalETHBalance();
+        /// 获取总 rETH 总供应量
         uint256 rethSupply = rocketNetworkBalances.getTotalRETHSupply();
         // Use 1:1 ratio if no rETH is minted
         if (rethSupply == 0) { return _rethAmount; }
         // Calculate and return
+        /// rETH 汇率 = 网络总ETH余额 ÷ rETH总供应量
         return _rethAmount.mul(totalEthBalance).div(rethSupply);
     }
-
+    /// 计算给定数量的 ETH 能够兑换多少 rETH 代币
     // Calculate the amount of rETH backed by an amount of ETH
     function getRethValue(uint256 _ethAmount) override public view returns (uint256) {
         // Get network balances
@@ -58,6 +61,7 @@ contract RocketTokenRETH is RocketBase, ERC20, RocketTokenRETHInterface {
         // Check network ETH balance
         require(totalEthBalance > 0, "Cannot calculate rETH token amount while total network balance is zero");
         // Calculate and return
+        ///rETH数量 = ETH数量 × rETH总供应量 ÷ 网络总ETH余额
         return _ethAmount.mul(rethSupply).div(totalEthBalance);
     }
 
