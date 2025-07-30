@@ -1,6 +1,6 @@
 ## ETH Staking 
 
-![](_img/eth-stake.png)
+![](../_img/eth-stake.png)
 
 ### example:
 
@@ -8,7 +8,7 @@ let's say that Alice has 32 ETHs. With her 32 ETH, she wants to run a validator 
 
 ## Rebase Token and non-Rebase Token
 
-![](_img/rebaseToken.png)
+![](../_img/rebaseToken.png)
 
 ### example:
 

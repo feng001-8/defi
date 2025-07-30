@@ -1,6 +1,6 @@
 ## Rocket Pool
 
-![](_img/rocketPool.png)
+![](../_img/rocketPool.png)
 
 ### example:
 
@@ -10,7 +10,7 @@ The way it works is that all three of these users will interact with the RocketP
 
 ## mint and burn
 
-![](_img/mint_burn.png)
+![](../_img/mint_burn.png)
 
 ### example:
 
