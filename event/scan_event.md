@@ -18,7 +18,7 @@
 
 - 非 Indexed 参数采用和函数参数编码 一样的规则,非索引事件作为 data 保存
 
-![](_img/event.png)
+![](../_img/event.png)
 
 ### 监听链上数据
 
@@ -31,7 +31,7 @@
 ### 订阅
 在区块链数据获取场景中，subscription 是一种实时获取区块链新数据的被动式机制，核心是 <span style="color:red;">“节点主动推送，客户端被动接收”，</span>用于高效、实时地监控区块链上的事件或状态变化。
 
-![](_img/event.png)
+![](../_img/event.png)
 
 https://ethereum.org/en/developers/tutorials/using-websockets/#eth-subscribe
 

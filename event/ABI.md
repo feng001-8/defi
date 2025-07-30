@@ -4,7 +4,7 @@
 - 智能合约应用二进制接口(Application Binary Interface,简称 ABI)是EVM中与合约交互的标准方式:包含接口描述和编码规范
 - 标准:方便人类阅读、定义接口 使前后端,其他智能合约能够正确地与合约进行交互;
 
-![](_img/ABI.png)
+![](../_img/ABI.png)
 
 
 ### 如何生成 ABI
@@ -29,7 +29,7 @@
     * components: 供元组(tuple) 类型使用(ABI 里只有预定义类型); 
 * stateMutability: 为下列值之一: pure , view , nonpayable 和 payable 。
 
-![](_img/ABI_json.png)
+![](../_img/ABI_json.png)
 
 
 ### ABI 编解码
@@ -43,7 +43,7 @@
 
 - 参数编码:第5个字节开始,静态(基本)类型扩展到 32 字节表示,动态类型用起始位置、数据大小、真实数据
 
-![](_img/ABI_decode.png)
+![](../_img/ABI_decode.png)
 
 
 ### ABI 编码工具
